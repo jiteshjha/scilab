@@ -287,6 +287,10 @@ Removed Functions
 
 * extract_help_examples has been removed. (Undocumented and based on former help format).
 
+* xclear has been removed. Please use clf instead.
+
+* fcontour2d has been removed. Please use contour2d instead.
+
 * Symbolic module functions have been removed:
   - addf
   - cmb_lin
@@ -325,19 +329,31 @@ Bug Fixes
 In 6.0.0:
 * Bug #2104 fixed  - iw(1:9) and w(1:10) ode() output parameters were not documented
 
-* Bug #6314 fixed  - The identical code of %p_m_r() and  %r_m_p() was not factorized
+* Bug #2517 fixed  - "position" property format was not accepted by figure() despite what was said in help
+
+* Bug #6314 fixed  - The identical code of %p_m_r() and %r_m_p() was not factorized
+
+* Bug #7378 fixed  - quart used with only NaNs did not return NaN
 
 * Bug #7646 fixed  - Extractions A'(1,2) and A.'(1,2) from a transposed matrix were not possible
 
 * Bug #8210 fixed  - Added UMFPACK examples to the Demo gui
 
+* Bug #8310        - Wrong triangulation of non-convex polygons, now it works for polygons lying in any plane or close enough of a plane.
+
+* Bug #7884 fixed - typeof help page was poor, puzzled, and not up-to-date to Scilab 6: new typeof "uint64", "int64", "void", "deletelist", "implicitlist" were missing ; former "hypermat" and "size implicit" typeof weren't removed ; typeof names longer than 8-char were not documented..
+
 * Bug #9456 fixed  - bench_run did not work on a path or in a toolbox
+
+* Bug #10082 fixed - string(complex) with real(complex)>0 did not remove the leading space replacing "+"
 
 * Bug #11625 fixed - uicontrol table would not update object strings when edited interactively in the plot window
 
 * Bug #12559       - Fixed some memory leaks in FFTW
 
 * Bug #12872       - help pages of else, elseif, end, try, sciargs, global, halt, empty and power were in wrong help sections
+
+* Bug #13154       - In shellmode, completion now separates Files from Directories.
 
 * Bug #13465 fixed - The display of polyline .display_function and .display_function properties was not conventional
 
@@ -353,6 +369,8 @@ In 6.0.0:
 
 * Bug #13810 fixed - householder(v, k*v) returned column of %nan. Input parameters were not checked. The Householder matrix could not be returned. Help pages were inaccurate and without examples. There was no householder() demo.
 
+* Bug #13816 fixed - show_margins caused a scilab crash
+
 * Bug #13839 fixed - sign() could not be used with sparse matrices
 
 * Bug #13869 fixed - bench_run with option nb_run=10 did not override the NB RUN tags
@@ -360,6 +378,10 @@ In 6.0.0:
 * Bug #13873 fixed - %hm_stdev(H,idim>2) returned zeros(H)
 
 * Bug #13897 fixed - concatenating structures with same fields in mismatching orders failed
+
+* Bug #13899 fixed - Syntax coloring was off in scinotes
+
+* Bug #13923 fixed - changes of typeof(:) and typeof(n:$) were not documented.
 
 * Bug #13939 fixed - in HTML help pages, itemizedlist <ul> were rendered as ordered ones
 
@@ -371,7 +393,9 @@ In 6.0.0:
 
 * Bug #14035 fixed - ndgrid did not manage all homogeneous data type (booleans, integers, polynomials, rationals, strings, [])
 
-* Bug #14099 fixed - sci2exp macro was fixed to avoid "a+[] Warning"
+* Bug #14067 fixed - 3rd argument of fsolve() became mandatory
+
+* Bug #14099 fixed - sci2exp macro was fixed to avoid "a+[] Warning". string(polynomials|rationals) had badly formated outputs and was not vectorized
 
 * Bug #14111 fixed - modified lib function to detect Scilab version 5 libraries and give proper error messages
 
@@ -381,13 +405,19 @@ In 6.0.0:
 
 * Bug #14271 fixed - conjgrad() displayed an incorrect error message about number of arguments.
 
+* Bug #14297 fixed - Updated cumsum y=cumsum(x) description. It was just a copy-paste of the help page "sum"
+
 * Bug #14347 fixed - plot2d crashed with multiple entries (non regression test).
 
 * Bug #14359 fixed - Black Hole demo updated. Stop and Clear buttons did not have priority tag set. Callback_type property has been added and set to 10.
 
 * Bug #14362 fixed - The ode() Lotka demo had typo errors
 
+* Bug #14366 fixed - typeof(var,"overload") was not documented
+
 * Bug #14374 fixed - Parser did not manage comments properly in shellmode
+
+* Bug #14375 fixed - Calling input function with a argument of 64 characters or more crashed Scilab.
 
 * Bug #14389 fixed - Updated int8(), type(), typeof(), overloading(), iconvert() and inttype() help pages. Added int64() and uint64() descriptions.
 
@@ -396,6 +426,8 @@ In 6.0.0:
 * Bug #14396 fixed - real number display was not proper for very wide decimal parts
 
 * Bug #14398 fixed - Matrix extraction was mistakenly considered a function call in calling sequence
+
+* Bug #14405 fixed - GetScilabVariableJNI symbol was not resolved on xcosPalAdd()
 
 * Bug #14415 fixed - Corrected some spellings error in help pages
 
@@ -432,6 +464,10 @@ In 6.0.0:
 * Bug #14495 fixed - consolebox() help page shew wrong syntaxes and was poor.
 
 * Bug #14499 fixed - getd() did not update already defined functions
+
+* Bug #14500 fixed - Operator ".^" was broken for sparse matrices.
+
+* Bug #14524 fixed - Numercic locales were not set to standard "C" by default at scilab startup
 
 
 In 6.0.0 beta-1:

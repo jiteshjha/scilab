@@ -107,7 +107,7 @@ public class XcosCell extends mxCell {
                 if (validCIdentifier.matcher(String.valueOf(value)).matches()) {
                     controller.setObjectProperty(getUID(), getKind(), ObjectProperties.LABEL, String.valueOf(value));
                 }
-            // no break on purpose
+                // no break on purpose
             case ANNOTATION:
                 controller.setObjectProperty(getUID(), getKind(), ObjectProperties.DESCRIPTION, String.valueOf(value));
                 break;
@@ -215,8 +215,8 @@ public class XcosCell extends mxCell {
                 }
 
                 /*
-                * At that point, the sourcePoint, targetPoint and points are valid values (but may be unknown) encode them to the the CONTROL_POINTS
-                */
+                 * At that point, the sourcePoint, targetPoint and points are valid values (but may be unknown) encode them to the the CONTROL_POINTS
+                 */
 
                 // Allocate some space to contains them all
                 int nbOfPoints = 2 + points.size();
@@ -265,8 +265,9 @@ public class XcosCell extends mxCell {
         }
 
         switch (getKind()) {
-            case ANNOTATION:
             case BLOCK:
+            case LINK:
+            case ANNOTATION:
             case PORT:
                 controller.setObjectProperty(getUID(), getKind(), ObjectProperties.STYLE, style);
                 break;
@@ -402,14 +403,13 @@ public class XcosCell extends mxCell {
     @Override
     public mxICell setTerminal(mxICell terminal, boolean isSource) {
         mxICell cell = super.setTerminal(terminal, isSource);
-
-        final long uid;
         if (cell == null) {
-            uid = 0l;
-        } else {
-            // a terminal of an XcosCell is always another XcosCell
-            uid = ((XcosCell) cell).getUID();
+            return cell;
         }
+
+        // a terminal of an XcosCell is always another XcosCell
+        final long uid = ((XcosCell) cell).getUID();
+        final Kind kind = ((XcosCell) cell).getKind();
 
         JavaController controller = new JavaController();
         switch (getKind()) {
@@ -420,7 +420,7 @@ public class XcosCell extends mxCell {
                     controller.setObjectProperty(getUID(), getKind(), ObjectProperties.DESTINATION_PORT, uid);
                 }
                 if (uid != 0l) {
-                    controller.setObjectProperty(uid, Kind.PORT, ObjectProperties.CONNECTED_SIGNALS, getUID());
+                    controller.setObjectProperty(uid, kind, ObjectProperties.CONNECTED_SIGNALS, getUID());
                 }
                 break;
             default:

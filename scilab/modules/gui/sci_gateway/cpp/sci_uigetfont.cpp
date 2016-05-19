@@ -12,6 +12,9 @@
  * along with this program.
  *
  */
+
+extern "C"
+{
 #include <string.h>
 #include "gw_gui.h"
 #include "api_scilab.h"
@@ -20,6 +23,7 @@
 #include "CallFontChooser.h"
 #include "getPropertyAssignedValue.h"
 #include "freeArrayOfString.h"
+}
 
 /*--------------------------------------------------------------------------*/
 int sci_uigetfont(char *fname, void* pvApiCtx)
@@ -211,13 +215,13 @@ int sci_uigetfont(char *fname, void* pvApiCtx)
     /* Default bold */
     if (boldAdr != 0)
     {
-        setFontChooserBold(fontChooserID, boldAdr[0]);
+        setFontChooserBold(fontChooserID, booltoBOOL(boldAdr[0]));
     }
 
     /* Default italic */
     if (italicAdr != 0)
     {
-        setFontChooserItalic(fontChooserID, italicAdr[0]);
+        setFontChooserItalic(fontChooserID, booltoBOOL(italicAdr[0]));
     }
 
     /* Display it and wait for a user input */
@@ -246,7 +250,11 @@ int sci_uigetfont(char *fname, void* pvApiCtx)
                 Scierror(999, _("%s: Memory allocation error.\n"), fname);
                 return 1;
             }
+        }
 
+        if (selectedFontName)
+        {
+            freeAllocatedSingleString(selectedFontName);
         }
 
         if (nbOutputArgument(pvApiCtx) >= 2)
@@ -290,6 +298,10 @@ int sci_uigetfont(char *fname, void* pvApiCtx)
     }
     else /* The user canceled */
     {
+        if (selectedFontName)
+        {
+            freeAllocatedSingleString(selectedFontName);
+        }
         nbRow = 0;
         nbCol = 0;
         if (nbOutputArgument(pvApiCtx) >= 1)
@@ -344,11 +356,6 @@ int sci_uigetfont(char *fname, void* pvApiCtx)
     AssignOutputVariable(pvApiCtx, 2) = nbInputArgument(pvApiCtx) + 2;
     AssignOutputVariable(pvApiCtx, 3) = nbInputArgument(pvApiCtx) + 3;
     AssignOutputVariable(pvApiCtx, 4) = nbInputArgument(pvApiCtx) + 4;
-
-    if (selectedFontName)
-    {
-        freeAllocatedSingleString(selectedFontName);
-    }
 
     if (fontNameSize)
     {

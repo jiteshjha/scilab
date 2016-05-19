@@ -299,7 +299,7 @@ public final class XcosCellFactory {
         return block;
     }
 
-    private static BasicBlock createBlock(final JavaController controller, long uid, Kind kind) {
+    public static BasicBlock createBlock(final JavaController controller, long uid, Kind kind) {
         String[] interfaceFunction = new String[1];
         if (kind == Kind.BLOCK) {
             controller.getObjectProperty(uid, kind, ObjectProperties.INTERFACE_FUNCTION, interfaceFunction);
@@ -413,10 +413,10 @@ public final class XcosCellFactory {
                                 properties.get(ObjectProperties.EVENT_OUTPUTS);
             convertGeometry = (2 * w + 2 * h) < (numberOfPorts * BasicPort.DEFAULT_PORTSIZE);
         } else {
-            convertGeometry = w < (properties.get(ObjectProperties.INPUTS) * BasicPort.DEFAULT_PORTSIZE) |
-                              w < (properties.get(ObjectProperties.OUTPUTS) * BasicPort.DEFAULT_PORTSIZE) |
-                              h < (properties.get(ObjectProperties.EVENT_INPUTS) * BasicPort.DEFAULT_PORTSIZE) |
-                              h < (properties.get(ObjectProperties.EVENT_OUTPUTS) * BasicPort.DEFAULT_PORTSIZE);
+            convertGeometry = h < (properties.get(ObjectProperties.INPUTS) * BasicPort.DEFAULT_PORTSIZE) |
+                              h < (properties.get(ObjectProperties.OUTPUTS) * BasicPort.DEFAULT_PORTSIZE) |
+                              w < (properties.get(ObjectProperties.EVENT_INPUTS) * BasicPort.DEFAULT_PORTSIZE) |
+                              w < (properties.get(ObjectProperties.EVENT_OUTPUTS) * BasicPort.DEFAULT_PORTSIZE);
         }
 
         if (convertGeometry) {
